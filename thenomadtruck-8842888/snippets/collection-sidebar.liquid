@@ -1,0 +1,60 @@
+{% comment %}
+
+  Side navigation for the product types, vendors, and tags.
+  These can be based on the current collection or all products. Details in comments below.
+
+  Note: Clicking on a tag will filter the products within the current collection.
+  Clicking on a type or vendor link will take you out of the current collection
+  to a standalone collection page. E.g. /collections/vendors?q=Pepsi
+
+{% endcomment %}
+
+{% comment %}
+  Product types in the current collection
+    - List all of the shop's types with collections.all.all_types
+    - List the current collection's types with collection.all_types
+{% endcomment %}
+{% if collection.all_types.size > 0 %}
+<div class="sidebar">
+<h3>{{ collection.title }}</h3>
+  <ul>
+    {% if collection.title == "SALE" %}
+    	{% for type in collection.all_types %}
+
+
+          {% if collection.current_type == type %}
+            <li class="filter--active">
+              {{ type }}
+            </li>
+          {% else %}
+            <li>
+              <a class="salefix" href="/collections/sale/{{type}}">{{type}}</a>
+
+            </li>
+        {% endif %}
+
+      {% endfor %}
+
+
+    {% else %}
+      {% for type in collection.all_types %}
+
+
+        {% if collection.current_type == type %}
+          <li class="filter--active">
+            {{ type }}
+          </li>
+        {% else %}
+          <li>
+            {{ type | link_to_type }}
+          </li>
+        {% endif %}
+
+      {% endfor %}
+
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
+
+<p class="shipping"><span style="color:#b49049;"><b>Free shipping</b></span> on all orders over $100!</p>

@@ -1,0 +1,77 @@
+<div class="grid">
+
+  <div class="grid__item">
+
+    <h1>{{ page.title }}</h1>
+
+    <div class="grid">
+
+      <div class="grid__item large--two-thirds">
+        <div class="grid">
+
+          {% for article in blogs.news.articles %}
+
+            {% if article.tags.first == 'featured' %}
+
+              <div class="grid__item large--one-half press">
+                <div class="press-item">
+
+                  <a href="{{ article.url }}">
+                    {% if article.title contains 'Business Insider' %}
+                      <img src="{{ 'Business-Insider.png' | asset_url }}" />
+                    {% elsif article.title contains 'Good Morning America' %}
+                      <img src="{{ 'abc_news.png' | asset_url }}" />
+                    {% elsif article.title contains 'New York Times' %}
+                      <img src="{{ 'The_New_York_Times_logo.png' | asset_url }}" />
+                    {% elsif article.title contains 'HLN' %}
+                      <img src="{{ 'HLN_logo.svg.png' | asset_url }}" />
+                    {% elsif article.title contains 'NBC' %}
+                      <img src="{{ 'NBC_NewYork.png' | asset_url }}" />
+                    {% elsif article.title contains 'ABC' %}
+                      <img src="{{ 'abc_news.png' | asset_url }}" />
+                    {% elsif article.title contains 'TimeOutNY' %}
+                      <img src="{{ 'timeoutnylogo.png' | asset_url }}" />
+                    {% endif %}
+                  </a>
+
+                </div>
+                <div class="press-caption">
+                  <a href="{{ article.url }}"><span class="press-title">{{ article.title }}</span></a>
+                  <span class="press-date">{{ article.published_at | date: "%B %d, %Y" }}</span>
+                </div>
+              </div>
+
+            {% endif %}
+
+          {% endfor %}
+
+        </div>
+      </div>
+
+      <div class="grid__item large--one-third">
+
+        <h2>Additional Press</h2>
+
+        {% for article in blogs.news.articles %}
+
+          {% if article.tags.first != 'featured' %}
+
+          <span class="press-additional"><a href="{{ article.url }}">{{ article.title }}</a></span>
+
+          {% endif %}
+
+        {% endfor %}
+      </div>
+
+    </div>
+
+    {% comment %}
+      Regular page content goes here.
+    {% endcomment %}
+    <div class="rte">
+      {{ page.content }}
+    </div>
+
+  </div>
+
+</div>
